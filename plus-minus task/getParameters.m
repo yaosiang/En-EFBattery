@@ -3,7 +3,7 @@ function p = getParameters
 % Messages:
 p.questionMsg = 'Press [SPACE] to read instructions.';
 p.pracMsg = 'Press [SPACE] to begin practice.';
-p.question2Msg = 'Press [SPACE] if you understand the instruction.\n\n\nIf you didn¡¦t understand the instructions, \n\nplease ask the researcher for assistance.';
+p.question2Msg = 'Press [SPACE] if you understand the instruction.\n\n\nIf you did not understand the instructions, \n\nplease ask the researcher for assistance.';
 p.plusMsg = 'Press [SPACE] to begin first stage experiment.';
 p.minusMsg = 'Press [SPACE] to begin second stage experiment.';
 p.plusMinusMsg = 'Press [SPACE] to begin third stage experiment.';

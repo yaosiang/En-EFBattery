@@ -77,23 +77,6 @@ try
   GetSecs;
   
   ListenChar(2);
-
-  % These preference setting selects the high quality text renderer on
-  % each operating system. On OS/X, its rather meaningless, because
-  % you'll always get the HQ renderer, on Linux its also meaningless,
-  % because there's only a low quality renderer. On Microsoft windows,
-  % the default renderer is the high quality, unicode capable
-  % renderer - which is about 10x slower on average, but still
-  % sufficiently fast for most purposes. We just have the command here
-  % for illustrative purpose...
-  Screen('Preference', 'TextRenderer', 1);
-
-  % We want the y-position of the text cursor to define the vertical
-  % position of the baseline of the text, as opposed to defining the top
-  % of the bounding box of the text. This command enables that behaviour
-  % by default. However, the Screen('DrawText') command provides an
-  % optional flag to override the global default on a case by case basis:
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 1);
   
   % Open a double buffered fullscreen window on the stimulation screen
   % 'screenNumber' and choose/draw a gray background. 'windowPtr' is the
@@ -198,7 +181,6 @@ try
   % Cleanup at end of experiment - Close window, show mouse cursor, close
   % result file, switch Matlab/Octave back to priority 0 -- normal
   % priority:
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 0);
   if isStandalone
     Screen('CloseAll');
     SetResolution(screenNumber, oldResolution);
@@ -213,7 +195,6 @@ try
 catch
   % Do same cleanup as at the end of a regular session...
   PsychPortAudio('Close', pahandle);
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 0);
   Screen('CloseAll');
   SetResolution(screenNumber, oldResolution);
   ListenChar(0);
