@@ -30,4 +30,5 @@ for i = 1:length(remainStimuli)
   totalStimuli{end-i+1} = remainStimuli{i};
 end
 
-stimuli = randSequence(totalStimuli, nCycles, nTrials * nTones);
+%stimuli = randSequence(totalStimuli, nCycles, nTrials * nTones);
+stimuli = randSequence(totalStimuli, nTrials, nTones);
