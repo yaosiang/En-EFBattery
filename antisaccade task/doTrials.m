@@ -136,7 +136,6 @@ for iCycle = 1:nCycles
       acc{count} = 'Y';
     else
       acc{count} = 'N';
-      %sound(parms.beep);
       PsychPortAudio('FillBuffer', pahandle, parms.beep);
   	  PsychPortAudio('Start', pahandle, 1, 0, 1);
       PsychPortAudio('Stop', pahandle);

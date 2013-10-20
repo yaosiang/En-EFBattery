@@ -33,7 +33,7 @@ end
 AssertOpenGL;
 
 % Reseed the random-number generator for each experiment:
-rand('twister', sum(100 * clock));
+rng('shuffle', 'twister');
 
 % Make sure keyboard mapping is the same on all supported operating systems
 % Apple MacOS/X, MS-Windows, and GNU/Linux:
@@ -56,12 +56,11 @@ try
   screens = Screen('Screens');
   screenNumber = max(screens);
 
-  % Change the sreen resolution to 1024 * 768 and refresh rate 60 Hz:
+  % Change the sreen resolution to 1024 * 768 px:
   if isStandalone
     resolution = NearestResolution(screenNumber, ...
                                    parms.screenWidth, ...
-                                   parms.screenHeight, ...
-                                   parms.screenRefreshRate);
+                                   parms.screenHeight);
     oldResolution = SetResolution(screenNumber, resolution);
   end
 
@@ -75,8 +74,6 @@ try
   WaitSecs(0.1);
   GetSecs;
 
-  ListenChar(2);
-
   % Perform basic initialization of the sound driver:
   InitializePsychSound;	
 	
@@ -85,7 +82,7 @@ try
   % handle used to direct all drawing commands to that window - the "Name"
   % of the window. 'rect' is a rectangle defining the size of the window:
   if isStandalone
-    [windowPtr, rect] = Screen('OpenWindow', screenNumber, parms.backColor);
+    [windowPtr, ~] = Screen('OpenWindow', screenNumber, parms.backColor);
   end
   
   % Set text size:
@@ -196,9 +193,6 @@ try
     ShowCursor;
   end
 
-  % Enable inputs from MATLAB:
-  ListenChar(0);
-
   % End of experiment:
   return;
 catch
@@ -206,7 +200,6 @@ catch
   PsychPortAudio('Close', pahandle);
   Screen('CloseAll');
   SetResolution(screenNumber, oldResolution);
-  ListenChar(0);
   ShowCursor;
 
   % Output the error message that describes the error:

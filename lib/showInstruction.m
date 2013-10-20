@@ -6,10 +6,10 @@ upKey = KbName('UpArrow');
 downKey = KbName('DownArrow');
 spaceKey = KbName('SPACE');
 
-msg1 = '[Space] Exit';
-msg2 = '[¡õ] Next';
-msg3 = '[¡ô] Previous [¡õ] Next';
-msg4 = '[¡ô] Previos [Space] Exit';
+msg1 = '[SPACE] Exit';
+msg2 = '[v] Next';
+msg3 = '[^] Previous [v] Next';
+msg4 = '[^] Previos [SPACE] Exit';
 
 currentPage = 1;
 while currentPage <= pages

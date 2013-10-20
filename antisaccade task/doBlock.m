@@ -62,6 +62,6 @@ for i = 1:nCycles * nTrials
 end
 blockResult{6} = target;
 
-blockResult{7} = response;
+blockResult{7} = firstDigit2Cell(response);
 blockResult{8} = num2cell(rt);
 blockResult{9} = acc;

@@ -1,7 +1,5 @@
 function main(windowPtr)
 
-Screen('Preference', 'SkipSyncTests', 1);
-
 beginTime = datestr(now);
 
 isStandalone = true;
@@ -35,7 +33,7 @@ end
 AssertOpenGL;
 
 % Reseed the random-number generator for each experiment:
-rand('twister', sum(100 * clock));
+rng('shuffle', 'twister');
 
 % Make sure keyboard mapping is the same on all supported operating systems
 % Apple MacOS/X, MS-Windows, and GNU/Linux:
@@ -58,12 +56,11 @@ try
   screens = Screen('Screens');
   screenNumber = max(screens);
 
-  % Change the sreen resolution to 1024 * 768 and refresh rate 60 Hz:
+  % Change the sreen resolution to 1024 * 768 px:
   if isStandalone
     resolution = NearestResolution(screenNumber, ...
                                    parms.screenWidth, ...
-                                   parms.screenHeight, ...
-                                   parms.screenRefreshRate);
+                                   parms.screenHeight);
     oldResolution = SetResolution(screenNumber, resolution);
   end
 
@@ -76,9 +73,6 @@ try
   KbCheck;
   WaitSecs(0.1);
   GetSecs;
-
-  % Disable inputs from MATLAB:
-  ListenChar(2);
 
   % Open a double buffered fullscreen window on the stimulation screen
   % 'screenNumber' and choose/draw a gray background. 'windowPtr' is the
@@ -107,16 +101,16 @@ try
   result{1} = doBlock('Response Mapping Practice', windowPtr, parms);
   % Show question message again:
   showCenteredMessage(windowPtr, parms.question2Msg, parms.foreColor);
-  getResponseRT(spaceKey);  
+  getResponseRT(spaceKey);
 
   result{2} = doBlock('Response Mapping', windowPtr, parms);
-  
+
   showInstruction(windowPtr, 2, 1, parms.foreColor);
   result{3} = doBlock('Antisaccade Practice', windowPtr, parms);
   % Show question message again:
   showCenteredMessage(windowPtr, parms.question2Msg, parms.foreColor);
   getResponseRT(spaceKey);
-  
+
   result{4} = doBlock('Antisaccade', windowPtr, parms);
   rt = toc;
 
@@ -182,16 +176,12 @@ try
     ShowCursor;
   end
 
-  % Enable inputs from MATLAB:
-  ListenChar(0);
-
   % End of experiment:
   return;
 catch
   % Do same cleanup as at the end of a regular session...
   Screen('CloseAll');
   SetResolution(screenNumber, oldResolution);
-  ListenChar(0);
   ShowCursor;
 
   % Output the error message that describes the error:

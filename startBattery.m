@@ -70,7 +70,7 @@ save('subjectId.mat', 'id');
 AssertOpenGL;
 
 % Reseed the random-number generator for each experiment:
-rand('twister', sum(100 * clock));
+rng('shuffle', 'twister');
 
 % Make sure keyboard mapping is the same on all supported operating systems
 % Apple MacOS/X, MS-Windows, and GNU/Linux:
@@ -95,7 +95,7 @@ try
   WaitSecs(0.1);
   GetSecs;
 
-  resolution = NearestResolution(screenNumber, 1024, 768, 60);
+  resolution = NearestResolution(screenNumber, 1024, 768);
   oldResolution = SetResolution(screenNumber, resolution);
 
   % Open a double buffered fullscreen window on the stimulation screen

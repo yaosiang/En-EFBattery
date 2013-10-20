@@ -33,7 +33,7 @@ end
 AssertOpenGL;
 
 % Reseed the random-number generator for each experiment:
-rand('twister', sum(100 * clock));
+rng('shuffle', 'twister');
 
 % Make sure keyboard mapping is the same on all supported operating systems
 % Apple MacOS/X, MS-Windows, and GNU/Linux:
@@ -56,12 +56,11 @@ try
   screens = Screen('Screens');
   screenNumber = max(screens);
 
-  % Change the sreen resolution to 1024 * 768 and refresh rate 60 Hz:
+  % Change the sreen resolution to 1024 * 768 px:
   if isStandalone
     resolution = NearestResolution(screenNumber, ...
                                    parms.screenWidth, ...
-                                   parms.screenHeight, ...
-                                   parms.screenRefreshRate);
+                                   parms.screenHeight);
     oldResolution = SetResolution(screenNumber, resolution);
   end
 
@@ -75,16 +74,6 @@ try
   WaitSecs(0.1);
   GetSecs;
 
-  % Disable inputs from MATLAB:
-  ListenChar(2);
-
-  % We want the y-position of the text cursor to define the vertical
-  % position of the baseline of the text, as opposed to defining the top
-  % of the bounding box of the text. This command enables that behaviour
-  % by default. However, the Screen('DrawText') command provides an
-  % optional flag to override the global default on a case by case basis:
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 1);
-
   % Open a double buffered fullscreen window on the stimulation screen
   % 'screenNumber' and choose/draw a gray background. 'windowPtr' is the
   % handle used to direct all drawing commands to that window - the "Name"
@@ -95,7 +84,7 @@ try
 
   % Set text size:
   Screen('TextSize', windowPtr, parms.textSize);
-  
+
   % Show check equipment message:
   showCenteredMessage(windowPtr, parms.checkEquipmentMsg, parms.foreColor);
   getResponseRT(spaceKey);
@@ -109,7 +98,7 @@ try
   tic
   % Show instruction message:
   showInstruction(windowPtr, 1, 2, parms.foreColor);
-  % Do the experiment:  
+  % Do the experiment:
   result{1} = doBlock('Practice', windowPtr, parms);
   % Show question message again:
   showCenteredMessage(windowPtr, parms.question2Msg, parms.foreColor);
@@ -128,9 +117,9 @@ try
     showCenteredMessage(windowPtr, parms.escapeMsg, parms.foreColor);
     KbWait([], 2);
   end
-    
+
   endTime = datestr(now);
-  
+
   % Generate result file:
   fid = fopen(strcat('data', filesep, resultFilename), 'wt');
 
@@ -168,24 +157,18 @@ try
   % Cleanup at end of experiment - Close window, show mouse cursor, close
   % result file, switch Matlab/Octave back to priority 0 -- normal
   % priority:
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 0);
   if isStandalone
     Screen('CloseAll');
     SetResolution(screenNumber, oldResolution);
     ShowCursor;
   end
 
-  % Enable inputs from MATLAB:
-  ListenChar(0);
-
   % End of experiment:
   return;
 catch
   % Do same cleanup as at the end of a regular session...
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 0);
   Screen('CloseAll');
   SetResolution(screenNumber, oldResolution);
-  ListenChar(0);
   ShowCursor;
 
   % Output the error message that describes the error:

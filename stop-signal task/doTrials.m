@@ -66,7 +66,6 @@ for iCycle = 1:nCycles
           if GetSecs <= ((stimulusOnset + parms.stopSignalOnsetTime) + 0.005) && ...
              GetSecs >= ((stimulusOnset + parms.stopSignalOnsetTime) - 0.005)
             if ~isSoundPlayed
-                %sound(parms.beep);
               PsychPortAudio('FillBuffer', pahandle, parms.beep);
   	          PsychPortAudio('Start', pahandle, 1, 0, 1);
 		          PsychPortAudio('Stop', pahandle);

@@ -55,7 +55,7 @@ for iCycle = 1:nCycles
         end
       end
 
-			%sound(parms.pitchStimuli{stimulus});
+      %sound(parms.pitchStimuli{stimulus});
       PsychPortAudio('FillBuffer', pahandle, parms.pitchStimuli{stimulus});
   	  PsychPortAudio('Start', pahandle, 1, 0, 1);
 

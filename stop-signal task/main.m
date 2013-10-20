@@ -33,7 +33,7 @@ end
 AssertOpenGL;
 
 % Reseed the random-number generator for each experiment:
-rand('twister', sum(100 * clock));
+rng('shuffle', 'twister');
 
 % Make sure keyboard mapping is the same on all supported operating systems
 % Apple MacOS/X, MS-Windows, and GNU/Linux:
@@ -56,7 +56,7 @@ try
   screens = Screen('Screens');
   screenNumber = max(screens);
 
-  % Change the sreen resolution to 1024 * 768 and refresh rate 60 Hz:
+  % Change the sreen resolution to 1024 * 768 px:
   if isStandalone
     resolution = NearestResolution(screenNumber, ...
                                    parms.screenWidth, ...
@@ -73,23 +73,13 @@ try
   KbCheck;
   WaitSecs(0.1);
   GetSecs;
-
-  % Disable inputs from MATLAB:
-  ListenChar(2);
-
-  % We want the y-position of the text cursor to define the vertical
-  % position of the baseline of the text, as opposed to defining the top
-  % of the bounding box of the text. This command enables that behaviour
-  % by default. However, the Screen('DrawText') command provides an
-  % optional flag to override the global default on a case by case basis:
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 1);
   
   % Open a double buffered fullscreen window on the stimulation screen
   % 'screenNumber' and choose/draw a gray background. 'windowPtr' is the
   % handle used to direct all drawing commands to that window - the "Name"
   % of the window. 'rect' is a rectangle defining the size of the window:
   if isStandalone
-    [windowPtr, rect] = Screen('OpenWindow', screenNumber, parms.backColor);
+    [windowPtr, ~] = Screen('OpenWindow', screenNumber, parms.backColor);
   end
 
   % Set text size:
@@ -182,24 +172,18 @@ try
   % Cleanup at end of experiment - Close window, show mouse cursor, close
   % result file, switch Matlab/Octave back to priority 0 -- normal
   % priority:
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 0);
   if isStandalone
     Screen('CloseAll');
     SetResolution(screenNumber, oldResolution);
     ShowCursor;
   end
 
-  % Enable inputs from MATLAB:
-  ListenChar(0);
-
   % End of experiment:
   return;
 catch
   % Do same cleanup as at the end of a regular session...
-  Screen('Preference', 'DefaultTextYPositionIsBaseline', 0);
   Screen('CloseAll');
   SetResolution(screenNumber, oldResolution);
-  ListenChar(0);
   ShowCursor;
 
   % Output the error message that describes the error:
