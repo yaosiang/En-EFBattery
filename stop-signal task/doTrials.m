@@ -12,7 +12,13 @@ rt = 1:nCycles * nTrials;
 acc = cell(1, nCycles * nTrials);
 
 buildBlockRT = zeros(1, nCycles * nTrials);
-parms.stopSignalOnsetTime = parms.buildBlockMeanRT - parms.stopSignalLatency;
+if ~isBuild
+    parms.stopSignalOnsetTime = parms.buildBlockMeanRT - parms.stopSignalLatency;    
+%     disp('------');
+%     disp(strcat('Build Block Mean RT: ', num2str(parms.buildBlockMeanRT)));
+%     disp(strcat('Stop Signal Onset Time: ', num2str(parms.stopSignalOnsetTime)));    
+%     disp('------');
+end
 
 % Display ready:
 showCenteredMessage(windowPtr, parms.readyMsg, parms.foreColor);
@@ -37,9 +43,6 @@ for iCycle = 1:nCycles
     words = stimuli{count}(1:length(stimuli{count})-1);
     isStop = stimuli{count}(length(stimuli{count}));
 
-    %chineseWord = stimuli{count}(1);
-    %isStop = stimuli{count}(2);
-
     if isBuild
       [flipStart, stimulusOnset] = showCenteredMessage(windowPtr, words, parms.foreColor);
       [response{count}, rt(count)] = getTimeoutResponseRT(responseKeySet, parms.targetDuration, stimulusOnset);
@@ -58,23 +61,34 @@ for iCycle = 1:nCycles
       else
         isSoundPlayed = false;
         responseTime = 0;
-        while KbCheck; end
 
         [flipStart, stimulusOnset] = showCenteredMessage(windowPtr, words, parms.foreColor);
+
+        while KbCheck; end
         while GetSecs < (stimulusOnset + (parms.targetDuration - parms.fixationDuration))
           [keyIsDown, secs, keyCode] = KbCheck;
           if GetSecs <= ((stimulusOnset + parms.stopSignalOnsetTime) + 0.005) && ...
              GetSecs >= ((stimulusOnset + parms.stopSignalOnsetTime) - 0.005)
+
+            % Play sound
             if ~isSoundPlayed
               PsychPortAudio('FillBuffer', pahandle, parms.beep);
   	          PsychPortAudio('Start', pahandle, 1, 0, 1);
-		          PsychPortAudio('Stop', pahandle);
+		      PsychPortAudio('Stop', pahandle);
               isSoundPlayed = true;
             end
+
           end
+
           if keyIsDown
             c = find(keyCode);
             if length(c) == 1
+              if ismember(c, KbName('ESCAPE'))
+                PsychPortAudio('Close', pahandle);
+                ShowCursor;
+                sca;
+                return;
+              end
               if ismember(c, responseKeySet)
                 responseTime = secs;
               end
@@ -82,6 +96,7 @@ for iCycle = 1:nCycles
             while KbCheck; end
           end
         end
+
         if responseTime ~= 0
           rt(count) = responseTime - stimulusOnset;
           response{count} = KbName(c);
@@ -97,14 +112,14 @@ for iCycle = 1:nCycles
 
     if isBuild
       if strcmp(acc{count}, 'Y')
-        buildBlockRT(count) = rt(count);
+        buildBlockRT(count) = rt(count);        
         parms.buildBlockMeanRT = sum(buildBlockRT(buildBlockRT > 0)) / length(find(buildBlockRT > 0));
       end
     end
 
     [flipStart, stimulusOnset] = Screen('Flip', windowPtr, 0);
     Screen('Flip', windowPtr, stimulusOnset + parms.ITI);
-     
+
     count = count + 1;
   end
 

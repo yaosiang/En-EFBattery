@@ -24,9 +24,9 @@ p.stopCycles = 1;
 
 % Trial numbers:
 p.buildPracTrials = 6;
-p.buildTrials = 24;
-p.stopPracTrials = 24;
-p.stopTrials = 120;
+p.buildTrials = 48;
+p.stopPracTrials = 16;
+p.stopTrials = 192;
 
 % Duration (secs):
 p.fixationDuration = 0.5;
@@ -47,8 +47,8 @@ p.nonAnimalStimuli = {'Knife', 'Cup'   , 'Gun'   , ...
                       'Cake' , 'Basin' , 'Stick'};
 
 % N trials for signal:
-p.nPracSignal = 12;
-p.nSignal = 30;
+p.nPracSignal = 4;
+p.nSignal = 48;
 
 % Feedback sound:
 p.beep = sin(1:0.5:100);

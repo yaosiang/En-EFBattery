@@ -31,13 +31,11 @@ totalStopSequence = randperm(nTrials);
 stimuli = randSequence([parms.animalStimuli, parms.nonAnimalStimuli], nCycles, nTrials);
 for i = 1:length(stimuli)
   stimuli{i}(length(stimuli{i}) + 1) = 'N';
-  %stimuli{i}(2) = 'N';
 end
 
 if ~isBuild
   stopSequence = totalStopSequence(1:nSignal);
   for i = 1:length(stopSequence)
     stimuli{stopSequence(i)}(length(stimuli{stopSequence(i)})) = 'Y';
-    %stimuli{stopSequence(i)}(2) = 'Y';
   end
 end
