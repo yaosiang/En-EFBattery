@@ -28,7 +28,7 @@ p.plusMinusTrials = 30;
 p.stimuli = 13:96;
 
 % Timeout (secs):
-p.timeOut = 5;
+p.timeOut = 10;
 
 % N letters for response:
 p.lastNo = 2;

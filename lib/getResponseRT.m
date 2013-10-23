@@ -1,29 +1,29 @@
 function [response, rt] = getResponseRT(keySet, stimulusOnset)
 
 if nargin < 2
-  stimulusOnset = -1;
+    stimulusOnset = -1;
 end
 
 if stimulusOnset ~= -1
-  startTime = stimulusOnset;
+    startTime = stimulusOnset;
 else
-  startTime = GetSecs;
+    startTime = GetSecs;
 end
 
 while KbCheck; end
 
 while true
-  [keyIsDown, secs, keyCode] = KbCheck;
-  if keyIsDown
-    c = find(keyCode);
-    if length(c) == 1
-      if ismember(c, keySet)
-        break;
-      end
+    [keyIsDown, secs, keyCode] = KbCheck;
+    if keyIsDown
+        c = find(keyCode);
+        if length(c) == 1
+            if ismember(c, keySet)
+                break;
+            end
+        end
+        while KbCheck; end
     end
-    while KbCheck; end
-  end
-  WaitSecs(0.01);
+    WaitSecs(0.01);
 end
 
 rt = secs - startTime;

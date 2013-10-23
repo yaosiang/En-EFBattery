@@ -1,5 +1,7 @@
 function main(windowPtr)
 
+Screen('Preference', 'SkipSyncTests', 1);
+
 beginTime = datestr(now);
 
 isStandalone = true;

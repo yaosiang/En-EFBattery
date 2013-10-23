@@ -32,6 +32,7 @@ p.consonants = {'B', 'C', 'D', 'F', 'G', ...
 p.lastNo = 4;
 
 % List length:
+p.pracListLength = {'5', '7'};
 p.listLength = {'5', '7', '9', '11'};
 
 % Output header:
