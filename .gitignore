@@ -1,10 +1,10 @@
 /instructions
-/antisaccade task/data
-/keep track task/data
-/local-global task/data
-/stroop task/data
-/letter memory task/data
-/number-letter task/data
-/tone monitoring task/data
-/plus-minus task/data
-/stop-signal task/data
+/antisaccade task/data/*
+/keep track task/data/*
+/local-global task/data/*
+/stroop task/data/*
+/letter memory task/data/*
+/number-letter task/data/*
+/tone monitoring task/data/*
+/plus-minus task/data/*
+/stop-signal task/data/*
