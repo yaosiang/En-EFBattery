@@ -82,7 +82,13 @@ try
     if isStandalone
         [windowPtr, ~] = Screen('OpenWindow', screenNumber, parms.backColor);
     end
-    
+
+    % Set priority for script execution to realtime priority:
+    if isStandalone
+      priorityLevel = MaxPriority(windowPtr);
+      Priority(priorityLevel);      
+    end    
+
     if isStandalone
         parms.triggerLevel = getTriggerLevel(windowPtr);
     end
@@ -181,6 +187,7 @@ try
         Screen('CloseAll');
         SetResolution(screenNumber, oldResolution);
         ShowCursor;
+        Priority(0);
     end
     
     % End of experiment:
@@ -191,6 +198,8 @@ catch
     Screen('CloseAll');
     SetResolution(screenNumber, oldResolution);
     ShowCursor;
+    Priority(0);
+    fclose('all');
     
     % Output the error message that describes the error:
     ple(psychlasterror);

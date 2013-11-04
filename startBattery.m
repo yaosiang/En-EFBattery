@@ -94,7 +94,7 @@ try
   KbCheck;
   WaitSecs(0.1);
   GetSecs;
-
+  
   resolution = NearestResolution(screenNumber, 1024, 768);
   oldResolution = SetResolution(screenNumber, resolution);
 
@@ -103,6 +103,10 @@ try
   % handle used to direct all drawing commands to that window - the "Name"
   % of the window. 'rect' is a rectangle defining the size of the window:
   [windowPtr, rect] = Screen('OpenWindow', screenNumber, BlackIndex(screenNumber));
+
+  % Set priority for script execution to realtime priority:
+  priorityLevel = MaxPriority(windowPtr);
+  Priority(priorityLevel);
 
   % Set text size:
   Screen('TextSize', windowPtr, 24);
@@ -169,8 +173,9 @@ try
   % result file, switch Matlab/Octave back to priority 0 -- normal
   % priority:
   Screen('CloseAll');
-  SetResolution(screenNumber, oldResolution);
+  SetResolution(screenNumber, oldResolution); 
   ShowCursor;
+  Priority(0);
 
   % End of battery:
   return;
@@ -184,7 +189,8 @@ catch
   Screen('CloseAll');
   SetResolution(screenNumber, oldResolution);
   ShowCursor;
-
+  Priority(0);
+  
   % Output the error message that describes the error:
   ple(psychlasterror);
 end
