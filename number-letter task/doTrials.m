@@ -16,6 +16,8 @@ vowelKey = KbName('s');
 consonantKey = KbName('l');
 spaceKey = KbName('SPACE');
 responseKeySet = [evenKey, oddKey, vowelKey, consonantKey];
+topQuadrantKeySet    = [evenKey, oddKey];
+bottomQuadrantKeySet = [vowelKey, consonantKey];
 
 Screen('TextFont', windowPtr, 'Courier New Bold');
 
@@ -98,9 +100,27 @@ for iCycle = 1:nCycles
     Screen('FrameRect', windowPtr, parms.foreColor, boxes);
     Screen('DrawingFinished', windowPtr);
     [flipStart, stimulusOnset] = Screen('Flip', windowPtr, 0);
- 
+
     % Get subject response and rt:
-    [response{count}, rt(count)] = getTimeoutResponseRT(responseKeySet, parms.timeOut, stimulusOnset);
+    if isTopQuadrant
+      [response{count}, rt(count)] = getTimeoutResponseRT(topQuadrantKeySet, parms.timeOut, stimulusOnset);
+    end
+    if ~isTopQuadrant && ~isClockwise
+      [response{count}, rt(count)] = getTimeoutResponseRT(bottomQuadrantKeySet, parms.timeOut, stimulusOnset);
+    end    
+    if isClockwise
+      switch stimuli{count}(3)
+        case '1'
+          [response{count}, rt(count)] = getTimeoutResponseRT(topQuadrantKeySet, parms.timeOut, stimulusOnset);   
+        case '2'
+          [response{count}, rt(count)] = getTimeoutResponseRT(topQuadrantKeySet, parms.timeOut, stimulusOnset);    
+        case '3'
+          [response{count}, rt(count)] = getTimeoutResponseRT(bottomQuadrantKeySet, parms.timeOut, stimulusOnset);      
+        case '4'
+          [response{count}, rt(count)] = getTimeoutResponseRT(bottomQuadrantKeySet, parms.timeOut, stimulusOnset);      
+      end
+    end
+
     if isempty(response{count})
       response{count} = 'n';
     else
