@@ -11,8 +11,7 @@ switch block
     blockMsg = parms.expMsg;
 end
 
-perm = fullfact([length(parms.colorFeatures) ...
-                 length(parms.globalFeatures) length(parms.localFeatures)]);
+perm = full_fact(1:length(parms.colorFeatures), 1:length(parms.globalFeatures), 1:length(parms.localFeatures));
 totalStimuliTable = cell(1, length(perm));
 sameStimuliTable = cell(1, (length(perm) / 4));
 

@@ -11,9 +11,9 @@ switch block
         blockMsg = parms.expMsg;
 end
 
-asteriskColorMapping = fullfact([1, length(parms.colorStimuli)]);
+asteriskColorMapping = [ones(1, length(parms.colorStimuli)); 1:length(parms.colorStimuli)]';
 asteriskColorMapping = num2cell(asteriskColorMapping', [2, max(size(asteriskColorMapping))]);
-nameColorMapping = fullfact([length(parms.nameStimuli), length(parms.colorStimuli)]);
+nameColorMapping = full_fact(1:length(parms.nameStimuli), 1:length(parms.colorStimuli));
 nameColorMapping = num2cell(nameColorMapping', [2, max(size(nameColorMapping))]);
 
 asteriskColorIndex = randSequence(1:length(asteriskColorMapping{1}), nCycles, (nTrials / 2));
