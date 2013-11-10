@@ -142,22 +142,34 @@ try
   showCenteredMessage(windowPtr, msg, WhiteIndex(screenNumber));
   KbWait([], 2);
   
+  isSkip = false;
   for i = 1:nTasks
     if isempty(choosedTasks); cd(taskNames{sequence(i)});        end
     if ~isempty(choosedTasks); cd(choosedTasks{1}{sequence(i)}); end
 
     if exist('main.m', 'file')
-      main(windowPtr);
+      if isSkip == false
+        main(windowPtr);
+      else
+        showCenteredMessage(windowPtr, 'Skip Task! Press any key to continue.', WhiteIndex(screenNumber));
+        KbWait([], 2);
+        isSkip = false;
+      end
     end
     cd('..');
-
+    
     if i ~= nTasks
-      msg = ['Begin ', num2str(i + 1), ' / ', num2str(nTasks), ' Experiments. Press any key to continue.'];
+      msg = ['Begin ', num2str(i + 1), ' / ', num2str(nTasks), ' Experiments. Press [SPACE] to continue; [s] to skip!'];
+      showCenteredMessage(windowPtr, msg, WhiteIndex(screenNumber));
+      response = getResponseRT([KbName('SPACE'), KbName('s')]);
+      if response == KbName('s')
+        isSkip = true;
+      end
     else
       msg = 'Thanks for your participation.\n\nPress any key to continue.';
+      showCenteredMessage(windowPtr, msg, WhiteIndex(screenNumber));
+      KbWait([], 2);
     end
-    showCenteredMessage(windowPtr, msg, WhiteIndex(screenNumber));
-    KbWait([], 2);
   end
 
   msg = 'Call Researcher Please!';
