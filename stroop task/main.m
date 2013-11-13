@@ -82,13 +82,13 @@ try
     if isStandalone
         [windowPtr, ~] = Screen('OpenWindow', screenNumber, parms.backColor);
     end
-
+    
     % Set priority for script execution to realtime priority:
     if isStandalone
-      priorityLevel = MaxPriority(windowPtr);
-      Priority(priorityLevel);      
-    end    
-
+        priorityLevel = MaxPriority(windowPtr);
+        Priority(priorityLevel);
+    end
+    
     if isStandalone
         parms.triggerLevel = getTriggerLevel(windowPtr);
     end

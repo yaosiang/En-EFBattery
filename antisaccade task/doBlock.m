@@ -16,16 +16,16 @@ blockResult = cell(1, length(str{:}));
 
 blockName = cell(1, nCycles * nTrials);
 for i = 1:nCycles * nTrials
-  switch block
-    case 'Response Mapping Practice'
-      blockName{i} = 'RespMapPracB';
-    case 'Response Mapping'
-      blockName{i} = 'RespMapB';
-    case 'Antisaccade Practice'
-      blockName{i} = 'AntiPracB';
-    case 'Antisaccade'
-      blockName{i} = 'AntiB';
-  end
+    switch block
+        case 'Response Mapping Practice'
+            blockName{i} = 'RespMapPracB';
+        case 'Response Mapping'
+            blockName{i} = 'RespMapB';
+        case 'Antisaccade Practice'
+            blockName{i} = 'AntiPracB';
+        case 'Antisaccade'
+            blockName{i} = 'AntiB';
+    end
 end
 blockResult{1} = blockName;
 
@@ -33,11 +33,11 @@ cycle = 1:nCycles * nTrials;
 trial = 1:nCycles * nTrials;
 count = 1;
 for iCycle = 1:nCycles
-  for jTrial = 1:nTrials
-    cycle(count) = iCycle;
-    trial(count) = jTrial;
-    count = count + 1;
-  end
+    for jTrial = 1:nTrials
+        cycle(count) = iCycle;
+        trial(count) = jTrial;
+        count = count + 1;
+    end
 end
 blockResult{2} = num2cell(cycle);
 blockResult{3} = num2cell(trial);
@@ -46,19 +46,19 @@ blockResult{4} = num2cell(fixation);
 
 position = cell(1, nCycles * nTrials);
 if isResponseMapping
-  for i = 1:nCycles * nTrials
-    position{i} = 'Null';
-  end
+    for i = 1:nCycles * nTrials
+        position{i} = 'Null';
+    end
 else
-  for i = 1:nCycles * nTrials
-    position{i} = stimuli{i}(2);
-  end
+    for i = 1:nCycles * nTrials
+        position{i} = stimuli{i}(2);
+    end
 end
 blockResult{5} = position;
 
 target = cell(1, nCycles * nTrials);
 for i = 1:nCycles * nTrials
-  target{i} = stimuli{i}(1);
+    target{i} = stimuli{i}(1);
 end
 blockResult{6} = target;
 

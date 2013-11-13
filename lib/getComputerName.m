@@ -11,14 +11,14 @@ function name = getComputerName()
 % (c) MJMJ/2007
 %
 
-[ret, name] = system('hostname');   
+[ret, name] = system('hostname');
 
 if ret ~= 0,
-   if ispc
-      name = getenv('COMPUTERNAME');
-   else      
-      name = getenv('HOSTNAME');      
-   end
+    if ispc
+        name = getenv('COMPUTERNAME');
+    else
+        name = getenv('HOSTNAME');
+    end
 end
 name = lower(name);
 

@@ -22,7 +22,7 @@ p.pracTrials = 36;
 p.expTrials = 96;
 
 % Duration (secs):
-p.ITI = 0.5; 
+p.ITI = 0.5;
 
 % Stimuli:
 p.globalFeatures = {'Circle', 'Cross', 'Triangle', 'Rectangle'};

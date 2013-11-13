@@ -15,16 +15,16 @@ blockResult = cell(1, length(str{:}));
 
 blockName = cell(1, nCycles * nTrials);
 for i = 1:nCycles * nTrials
-  switch block
-    case 'Build Practice'
-      blockName{i} = 'BuildPracB';
-    case 'Build'
-      blockName{i} = 'BuildB';
-    case 'Stop Practice'
-      blockName{i} = 'StopPracB';
-    case 'Stop'
-      blockName{i} = 'StopB';
-  end
+    switch block
+        case 'Build Practice'
+            blockName{i} = 'BuildPracB';
+        case 'Build'
+            blockName{i} = 'BuildB';
+        case 'Stop Practice'
+            blockName{i} = 'StopPracB';
+        case 'Stop'
+            blockName{i} = 'StopB';
+    end
 end
 blockResult{1} = blockName;
 
@@ -32,11 +32,11 @@ cycle = 1:nCycles * nTrials;
 trial = 1:nCycles * nTrials;
 count = 1;
 for iCycle = 1:nCycles
-  for jTrial = 1:nTrials
-    cycle(count) = iCycle;
-    trial(count) = jTrial;
-    count = count + 1;
-  end
+    for jTrial = 1:nTrials
+        cycle(count) = iCycle;
+        trial(count) = jTrial;
+        count = count + 1;
+    end
 end
 blockResult{2} = num2cell(cycle);
 blockResult{3} = num2cell(trial);
@@ -44,8 +44,8 @@ blockResult{3} = num2cell(trial);
 target = cell(1, nCycles * nTrials);
 isStop = cell(1, nCycles * nTrials);
 for i = 1:nCycles * nTrials
-  target{i} = stimuli{i}(1:length(stimuli{i})-1);
-  isStop{i} = stimuli{i}(length(stimuli{i}));
+    target{i} = stimuli{i}(1:length(stimuli{i})-1);
+    isStop{i} = stimuli{i}(length(stimuli{i}));
 end
 blockResult{4} = target;
 blockResult{5} = isStop;

@@ -59,8 +59,8 @@ try
     % Change the sreen resolution to 1024 * 768 px:
     if isStandalone
         resolution = NearestResolution(screenNumber, ...
-                                       parms.screenWidth, ...
-                                       parms.screenHeight);
+            parms.screenWidth, ...
+            parms.screenHeight);
         oldResolution = SetResolution(screenNumber, resolution);
     end
     
@@ -81,11 +81,11 @@ try
     if isStandalone
         [windowPtr, ~] = Screen('OpenWindow', screenNumber, parms.backColor);
     end
-
+    
     % Set priority for script execution to realtime priority:
     if isStandalone
-      priorityLevel = MaxPriority(windowPtr);
-      Priority(priorityLevel);      
+        priorityLevel = MaxPriority(windowPtr);
+        Priority(priorityLevel);
     end
     
     % Set text size:

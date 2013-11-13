@@ -59,8 +59,8 @@ try
     % Change the sreen resolution to 1024 * 768 px:
     if isStandalone
         resolution = NearestResolution(screenNumber, ...
-                                       parms.screenWidth, ...
-                                       parms.screenHeight);
+            parms.screenWidth, ...
+            parms.screenHeight);
         oldResolution = SetResolution(screenNumber, resolution);
     end
     
@@ -84,8 +84,8 @@ try
     
     % Set priority for script execution to realtime priority:
     if isStandalone
-      priorityLevel = MaxPriority(windowPtr);
-      Priority(priorityLevel);      
+        priorityLevel = MaxPriority(windowPtr);
+        Priority(priorityLevel);
     end
     
     % Set text size:
@@ -102,10 +102,10 @@ try
     showInstruction(windowPtr, 1, 1, parms.foreColor);
     % Do the experiment:
     result{1} = doBlock('Practice', windowPtr, parms);
-
+    
     % Show question message again:
     showCenteredMessage(windowPtr, parms.question2Msg, parms.foreColor);
-    getResponseRT(spaceKey);    
+    getResponseRT(spaceKey);
     result{2} = doBlock('Plus', windowPtr, parms);
     
     % Show instruction message:
